@@ -1,0 +1,18 @@
+# Compiled files
+/target/
+
+# Generated documentation
+/doc/
+
+# Environment file
+.env
+
+# Editor and IDE files
+.vscode/
+.idea/
+
+# macOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
