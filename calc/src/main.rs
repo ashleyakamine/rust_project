@@ -3,7 +3,6 @@ use std::io;
 fn main() {
     println!("Simple Rust Calculator");
     println!("----------------------");
-    println!("Enter expressions like '2 + 3', '10 * 5', etc.");
 
     loop {
         let mut input = String::new();
@@ -45,6 +44,8 @@ fn evaluate_expression(expression: &str) -> Result<f64, String> {
                 "+" => Ok(a + b),
                 "-" => Ok(a - b),
                 "*" => Ok(a * b),
+                "%" => Ok(a % b),
+                "^" => Ok(a.powf(b)),
                 "/" => {
                     if b == 0.0 {
                         Err("Division by zero".to_string())
