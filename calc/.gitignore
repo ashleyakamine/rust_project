@@ -16,3 +16,7 @@
 
 # Windows specific files
 Thumbs.db
+
+# Rust specific files
+Cargo.lock
+Cargo.toml
