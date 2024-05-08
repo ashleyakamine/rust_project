@@ -30,32 +30,43 @@ fn main() {
 fn evaluate_expression(expression: &str) -> Result<f64, String> {
     let parts: Vec<&str> = expression.split_whitespace().collect();
 
-    if parts.len() != 3 {
-        return Err("Invalid expression format".to_string());
-    }
+    match parts.len() {
+        3 => {
+            let first = parts[0].parse::<f64>();
+            let second = parts[2].parse::<f64>();
 
-    let first = parts[0].parse::<f64>();
-    let second = parts[2].parse::<f64>();
-
-    match (first, second) {
-        (Ok(a), Ok(b)) => {
-            let operator = parts[1];
-            match operator {
-                "+" => Ok(a + b),
-                "-" => Ok(a - b),
-                "*" => Ok(a * b),
-                "%" => Ok(a % b),
-                "^" => Ok(a.powf(b)),
-                "/" => {
-                    if b == 0.0 {
-                        Err("Division by zero".to_string())
-                    } else {
-                        Ok(a / b)
+            match (first, second) {
+                (Ok(a), Ok(b)) => {
+                    match parts[1] {
+                        "+" => Ok(a + b),
+                        "-" => Ok(a - b),
+                        "*" => Ok(a * b),
+                        "%" => Ok(a % b),
+                        "^" => Ok(a.powf(b)),
+                        "/" => {
+                            if b == 0.0 {
+                                Err("Division by zero".to_string())
+                            } else {
+                                Ok(a / b)
+                            }
+                        },
+                        _ => Err("Invalid operator".to_string()),
                     }
                 }
-                _ => Err("Invalid operator".to_string()),
+                _ => Err("Invalid numbers".to_string()),
             }
         }
-        _ => Err("Invalid numbers".to_string()),
+        2 => {
+            let number = parts[1].parse::<f64>();
+
+            match number {
+                Ok(a) if parts[0] == "sqrt" => Ok(a.sqrt()),
+                Ok(a) if parts[0] == "sin" => Ok(a.sin()),
+                Ok(a) if parts[0] == "cos" => Ok(a.cos()),
+                Ok(a) if parts[0] == "tan" => Ok(a.tan()),
+                _ => Err("Invalid expression format".to_string()),
+            }
+        }
+        _ => Err("Invalid expression format".to_string()),
     }
 }
